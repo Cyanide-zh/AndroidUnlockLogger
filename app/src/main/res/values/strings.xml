@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">UnlockLogger</string>
+    <string name="label_unlock_history">解锁历史记录 (最新在前)</string>
+    <string name="button_clear_logs">清空所有记录</string>
+    <string name="content_delete_record">删除此条记录</string>
+    
+    <string name="category_file_paths">文件路径配置 (需要 Root 权限)\n
+		通过shell操作本应用:\n
+        1. 发通知: am broadcast -a com.example.unlocklogger.ACTION_SHELL_NOTIFICATION -n com.example.unlocklogger/com.example.unlocklogger.receiver.NotificationReceiver --es notification_message  "现在是""$(date)"  \n
+        2. TTS: tts=开始说话时间是"$(date  +"%Y年%m月%d日%H点%M分%S秒")" ; am broadcast -a com.example.unlocklogger.ACTION_TTS_SPEAK -n com.example.unlocklogger/com.example.unlocklogger.receiver.TtsReceiver --es tts_text "$tts" \n</string>
+    <string name="label_logging_switch">启用历史日志追加功能</string>
+    <string name="pref_key_logging_enabled" translatable="false">logging_enabled_key</string>
+    
+    <string name="title_timestamp_path">时间戳覆写路径</string>
+    <string name="summary_timestamp_path">每次解锁，Linux时间戳将覆写到此文件，需要Root权限。</string>
+    <string name="dialog_title_timestamp_path">输入时间戳文件路径</string>
+    <string name="pref_key_timestamp_path" translatable="false">timestamp_file_path_key</string>
+
+    <string name="title_log_record_path">历史记录追加路径</string>
+    <string name="summary_log_record_path">每次解锁，可读时间将追加到此文件，需要Root权限。\n</string>
+    <string name="dialog_title_log_record_path">输入历史记录文件路径</string>
+    <string name="pref_key_log_record_path" translatable="false">log_record_file_path_key</string>
+</resources>

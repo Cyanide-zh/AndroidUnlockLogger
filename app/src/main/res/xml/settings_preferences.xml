@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:key="@string/pref_key_logging_enabled"
+        android:title="@string/label_logging_switch"
+        android:defaultValue="true"/>
+
+    <PreferenceCategory android:title="@string/category_file_paths">
+
+        <EditTextPreference
+            android:key="@string/pref_key_timestamp_path"
+            android:title="@string/title_timestamp_path"
+            android:summary="@string/summary_timestamp_path"
+            android:defaultValue="/data/last_unlock_time.txt"
+            android:dialogTitle="@string/dialog_title_timestamp_path"
+            android:persistent="true"/>
+
+        <EditTextPreference
+            android:key="@string/pref_key_log_record_path"
+            android:title="@string/title_log_record_path"
+            android:summary="@string/summary_log_record_path"
+            android:defaultValue="/data/local/tmp/unlock_records.txt"
+            android:dialogTitle="@string/dialog_title_log_record_path"
+            android:persistent="true"/>
+            
+    </PreferenceCategory>
+
+</PreferenceScreen>
