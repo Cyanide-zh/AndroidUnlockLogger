@@ -22,6 +22,7 @@ class NotificationReceiver : BroadcastReceiver() {
         private const val EXTRA_MESSAGE = "notification_message"
     }
     override fun onReceive(context: Context, intent: Intent) {
+        android.util.Log.e("TEST_DEBUG", "Receiver 被唤醒了！Action: " + intent.action)
         val action = intent.action
         Log.d("UnlockLogger", "onReceive 触发, Action: ${intent.action}")
         if (intent.action == "com.example.unlocklogger.ACTION_GET_LOCATION") {
