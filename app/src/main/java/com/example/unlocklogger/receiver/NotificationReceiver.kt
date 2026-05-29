@@ -9,7 +9,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.unlocklogger.R
 import com.example.unlocklogger.ui.MainActivity
-
+import com.example.unlocklogger.utils.LocationHelper // 必须添加这一行
 /**
  * 接收来自 ADB Shell 命令的特定广播，并在通知栏显示消息。
  */
