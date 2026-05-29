@@ -21,18 +21,20 @@ class NotificationReceiver : BroadcastReceiver() {
         const val ACTION_SHELL_NOTIFICATION = "com.example.unlocklogger.ACTION_SHELL_NOTIFICATION" 
         private const val EXTRA_MESSAGE = "notification_message"
     }
-
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == ACTION_SHELL_NOTIFICATION) {
-            
+        if (intent.action == "com.example.unlocklogger.ACTION_GET_LOCATION") {
+            // 使用一个异步方法或者直接启动 Service/Worker 来处理定位
+            // 因为 GPS 定位请求是异步的，Receiver 随时可能被系统销毁
+            LocationHelper.requestSingleLocation(context) { locationString ->
+                Log.i("UnlockLoggerLocation", "LOCATION_RESULT: $locationString")
+            }
+        } else if (intent.action == ACTION_SHELL_NOTIFICATION) {
             val message = intent.getStringExtra(EXTRA_MESSAGE) ?: "未指定通知内容"
             Log.d(TAG, "接收到 Shell 通知请求: $message")
-
             // 构建并显示通知
             showNotification(context, message)
         }
     }
-
     /**
      * 构建并显示通知
      */
