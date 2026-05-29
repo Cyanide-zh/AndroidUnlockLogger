@@ -61,7 +61,8 @@ dependencies {
     // Kotlin 协程 (Coroutines) - 用于在后台线程执行 Root 文件 IO 操作
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
-
+    //添加 Google Play Services Location 库
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
     // 测试依赖 (可以保留或省略)
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
