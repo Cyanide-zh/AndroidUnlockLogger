@@ -1,4 +1,4 @@
-package com.example.unlocklogger.util
+package com.example.unlocklogger.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
