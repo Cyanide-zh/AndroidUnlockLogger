@@ -23,7 +23,19 @@ object LocationHelper {
         val listener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
                 handler.removeCallbacksAndMessages(null)
-                val result = "Lat=${location.latitude}, Lon=${location.longitude}, Acc=${location.accuracy}"
+                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+                val timeString = sdf.format(Date(location.time))
+                val lat = location.latitude
+                val lon = location.longitude
+                val alt = String.format(Locale.US, "%.2f", location.altitude)
+                // 速度：m/s
+                val speed = location.speed
+                // 方向 (Bearing)：度数
+                val bearing = location.bearing
+                // 精确度 (Accuracy)：米
+                val accuracy = location.accuracy
+                //val result = "Lat=${location.latitude}, Lon=${location.longitude}, Acc=${location.accuracy}"
+                val result = "Time: $timeString | Lat: $lat | Lon: $lon | Alt: ${alt}m | Speed: ${speed}m/s | Dir: ${bearing} | Acc: ${accuracy}m"
                 Log.i("LocationHelper", "GPS 定位成功: $result")
                 callback(result)
                 locationManager.removeUpdates(this)
