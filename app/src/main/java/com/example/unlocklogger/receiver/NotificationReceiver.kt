@@ -25,8 +25,16 @@ class NotificationReceiver : BroadcastReceiver() {
         when (action) {
             "com.example.unlocklogger.ACTION_START_LOCATION" -> {
                 Log.d(TAG, "指令接收：准备启动持续定位服务")
+                // 🚨 1. 读取 Shell 传入的参数，默认值为 2000 毫秒
+                // "interval" 是我们在 adb 命令中指定的 key
+                val intervalMs = intent.getLongExtra("interval", 2000L)
+                Log.d(TAG, "指令接收：准备启动持续定位服务，时间间隔: ${intervalMs}ms")
                 // 通过广播启动 Service
-                val serviceIntent = Intent(context, LocationService::class.java)
+                //val serviceIntent = Intent(context, LocationService::class.java)
+                // 2. 将参数放入启动 Service 的 Intent 中
+                val serviceIntent = Intent(context, LocationService::class.java).apply {
+                    putExtra("location_interval", intervalMs)
+                }
                 context.startService(serviceIntent)
             }
             "com.example.unlocklogger.ACTION_STOP_LOCATION" -> {
