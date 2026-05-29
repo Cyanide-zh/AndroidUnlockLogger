@@ -22,6 +22,7 @@ class NotificationReceiver : BroadcastReceiver() {
         private const val EXTRA_MESSAGE = "notification_message"
     }
     override fun onReceive(context: Context, intent: Intent) {
+        val action = intent.action
         Log.d("UnlockLogger", "onReceive 触发, Action: ${intent.action}")
         if (intent.action == "com.example.unlocklogger.ACTION_GET_LOCATION") {
             // 使用一个异步方法或者直接启动 Service/Worker 来处理定位
