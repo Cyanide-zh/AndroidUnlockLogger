@@ -58,6 +58,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="com.example.unlocklogger.ACTION_SHELL_NOTIFICATION" />
+				<action android:name="com.example.unlocklogger.ACTION_GET_LOCATION" />
             </intent-filter>
         </receiver>
         
