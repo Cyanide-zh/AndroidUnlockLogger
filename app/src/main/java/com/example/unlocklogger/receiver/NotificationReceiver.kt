@@ -22,9 +22,11 @@ class NotificationReceiver : BroadcastReceiver() {
         private const val EXTRA_MESSAGE = "notification_message"
     }
     override fun onReceive(context: Context, intent: Intent) {
+        Log.d("UnlockLogger", "onReceive 触发, Action: ${intent.action}")
         if (intent.action == "com.example.unlocklogger.ACTION_GET_LOCATION") {
             // 使用一个异步方法或者直接启动 Service/Worker 来处理定位
             // 因为 GPS 定位请求是异步的，Receiver 随时可能被系统销毁
+            Log.d("UnlockLogger", "准备请求位置...")
             LocationHelper.requestSingleLocation(context) { locationString ->
                 Log.i("UnlockLoggerLocation", "LOCATION_RESULT: $locationString")
             }
