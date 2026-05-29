@@ -17,7 +17,7 @@ object LocationHelper {
     private const val TAG = "LocationHelper"
 
     @SuppressLint("MissingPermission")
-    fun startTracking(context: Context) {
+    fun startTracking(context: Context, intervalMs: Long) {
         // 1. 防御性处理：如果之前有没关闭的监听，先强制关闭，防止重复叠加导致耗电
         stopTracking()
 
@@ -59,11 +59,11 @@ object LocationHelper {
         }
 
         try {
-            Log.d(TAG, "唤醒 GPS 硬件，开始长连接持续定位...")
-            // 🚨 核心替换：每 2 秒更新一次，距离变动 0 米就更新，强制硬件保持通电
+            Log.d(TAG, "唤醒 GPS 硬件，开始长连接持续定位，当前应用间隔: ${intervalMs}ms")
+            // 🚨 核心替换：每指定时间更新一次，距离变动 0 米就更新，强制硬件保持通电
             locManager?.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 
-                2000L, 
+                intervalMs, 
                 0f, 
                 activeListener!!
             )
