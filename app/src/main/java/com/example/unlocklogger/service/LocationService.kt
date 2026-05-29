@@ -34,12 +34,14 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("LocationService", "前台定位服务已启动，准备提升权限并唤醒硬件")
+        // 🚨 从 Intent 中提取广播传过来的时间间隔，保底默认 2000L
+        val intervalMs = intent?.getLongExtra("location_interval", 2000L) ?: 2000L
+        Log.d("LocationService", "前台定位服务已启动，准备唤醒硬件，传参间隔: ${intervalMs}ms")
 
         // 1. 构建常驻通知
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("GPS 实时定位运行中")
-            .setContentText("正在通过 ADB Shell 持续同步卫星数据...")
+            .setContentText("当前定位刷新间隔: ${intervalMs / 1000.0} 秒") // 动态显示在通知上
             .setSmallIcon(android.R.drawable.ic_menu_mylocation) // 使用系统自带图标
             .setOngoing(true) // 设置为无法被用户滑动清除
             .build()
@@ -47,8 +49,8 @@ class LocationService : Service() {
         // 2. 🚨 关键：将服务提升为前台服务（强制锁定硬件权限）
         startForeground(NOTIFICATION_ID, notification)
 
-        // 3. 启动持续定位
-        LocationHelper.startTracking(this)
+        // 3. 将动态间隔传入 Helper,启动持续定位
+        LocationHelper.startTracking(this, intervalMs)
 
         return START_STICKY
     }
