@@ -17,8 +17,7 @@ object LocationHelper {
     private const val TIMEOUT_MS = 40000L //单位毫秒
 
     @SuppressLint("MissingPermission")
-    //fun requestSingleLocation(context: Context, callback: (String) -> Unit) {
-    fun requestLocationUpdates(context: Context, callback: (String) -> Unit) {    
+    fun requestSingleLocation(context: Context, callback: (String) -> Unit) {  
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val handler = Handler(Looper.getMainLooper())
 
@@ -67,22 +66,10 @@ object LocationHelper {
         
         try {
             Log.d("LocationHelper", "开始请求纯 GPS 定位...")
-            //locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, listener, null)
-            locManager?.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 
-                5000L, 
-                0f, 
-                activeListener!!
-            ) //5000毫秒刷新1次
+            locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, listener, null)
         } catch (e: Exception) {
             Log.e("LocationHelper", "请求异常: ${e.message}")
             handler.removeCallbacksAndMessages(null)
         }
-    }
-    fun stopTracking() {
-    activeListener?.let {
-        locManager?.removeUpdates(it)
-    }
-    activeListener = null
     }
 }
