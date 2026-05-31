@@ -19,9 +19,11 @@ A lightweight Android utility designed to log device unlock events using Root pr
 Bash
 git clone https://github.com/Cyanide-zh/AndroidUnlockLogger.git
 2. Build: Open the project in Android Studio and build the APK.
-3. Permissions: Ensure the app is granted Root Access and Notification Permissions (Android 13+).
+3. Permissions: Ensure the app is granted Root Access and Notification, GPS Permissions (Android 13+).
 
 ### Usage via ADB
 - **Wake up the App (Even if Force-Stopped)**: `am start -n com.example.unlocklogger/.ui.InvisibleActivity`
-- **Trigger a System Notification**: `am broadcast -a com.example.unlocklogger.ACTION_SHELL_NOTIFICATION -n com.example.unlocklogger/com.example.unlocklogger.receiver.NotificationReceiver -f 0x00000020 --es notification_message  "The time is ""$(date "+%Y-%m-%d_%H-%M-%S_%3N")" ; `
+- **Trigger a System Notification**: `am broadcast -a com.example.unlocklogger.ACTION_SHELL_NOTIFICATION --es extra_message "$(date)" com.example.unlocklogger/.receiver.NotificationReceiver  -f 0x00000020 ; `
+- **Start GPS Logging**: `am broadcast -a com.example.unlocklogger.ACTION_START_LOCATION --el interval 2000 com.example.unlocklogger/.receiver.NotificationReceiver ; #2000ms`
+- **Stop GPS Logging**: `am broadcast -a com.example.unlocklogger.ACTION_STOP_LOCATION com.example.unlocklogger/.receiver.NotificationReceiver ;`
 - **Text-to-Speech (TTS)**: `tts='Welcome to the H.E.V. Mark 4 protective system. For use in hazardous environment conditions. High-impact reactive armor activated. Atmospheric contaminant sensors activated. Vital sign monitoring activated. Automatic medical systems engaged. Defensive weapon selection system activated. Munition level monitoring activated. Communications interface online. Have a very safe day!' ; am broadcast -a com.example.unlocklogger.ACTION_TTS_SPEAK -n com.example.unlocklogger/com.example.unlocklogger.receiver.TtsReceiver  -f 0x00000020 --es tts_text "$tts" ;  `
