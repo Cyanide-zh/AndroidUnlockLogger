@@ -22,7 +22,15 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    signingConfigs {
+        release {
+            // 密钥配置
+            storeFile file("keystore.jks") 
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+    }
     buildTypes {
         release {
             // release 版本配置，通常用于发布
