@@ -23,7 +23,7 @@ jobs:
 
       #  将 Base64 恢复为 Keystore 文件
     - name: Decode Keystore
-      working-directory: app
+      working-directory: /
       run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks ; sleep 1
 
       
@@ -32,7 +32,7 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build Release APK
-      run: ./gradlew assembleRelease ;  # 编译签名版 APK
+      run: ./gradlew assembleRelease ; find ./app/build/outputs/  -name "*.apk" |xargs ls -lh   # 编译签名版 APK
 
     # 编译完成后，将 APK 上传到 GitHub Actions 的 Artifacts 栏目
     - name: Upload APK
