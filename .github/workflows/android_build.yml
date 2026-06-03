@@ -24,21 +24,27 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build Debug APK
-      run: ./gradlew assembleDebug # 编译 Debug 版 APK，无需签名即可安装
+    #  将 Base64 恢复为 Keystore 文件
+    - name: Decode Keystore
+      working-directory: app
+      run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks ; sleep 1
 
-    # 编译完成后，将 APK 上传到 GitHub Actions 的 Artifacts 栏目
+    - name: Build Release APK
+      run: ./gradlew assembleRelease # 编译签名版 APK
+
+    # 编译完成后，将 APK 上传到 GitHub Actions 的 Artifacts 栏目 #改为使用发布构建
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: UnlockLogger-Debug-APK
-        path: app/build/outputs/apk/debug/app-debug.apk
+        name: UnlockLogger-Release-APK
+        path: app/build/outputs/apk/release/app-release.apk
 
     # (可选) 如果你打了 Tag，可以自动创建一个 Release 并发布 APK
     - name: Create Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
-        files: app/build/outputs/apk/debug/app-debug.apk
+        #files: app/build/outputs/apk/debug/app-debug.apk
+        files: app/build/outputs/apk/release/app-release.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
