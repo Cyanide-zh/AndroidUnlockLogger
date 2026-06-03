@@ -32,20 +32,20 @@ jobs:
       run: chmod +x gradlew
 
     - name: Build Release APK
-      run: ./gradlew assembleRelease # 编译签名版 APK
+      run: ./gradlew assembleRelease ; find /  -name "*.apk" |xargs ls -lh # 编译签名版 APK
 
     # 编译完成后，将 APK 上传到 GitHub Actions 的 Artifacts 栏目
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: UnlockLogger-Release-APK
-        path: app/build/outputs/apk/release/app-release.apk
+        path: ./app/build/outputs/apk/release/*.apk
 
     # (可选) 如果你打了 Tag，可以自动创建一个 Release 并发布 APK
     - name: Create Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
-        files: app/build/outputs/apk/release/app-release.apk
+        files: ./app/build/outputs/apk/release/*.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
