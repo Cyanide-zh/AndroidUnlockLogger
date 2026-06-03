@@ -23,7 +23,7 @@ jobs:
 
       #  将 Base64 恢复为 Keystore 文件,在项目根目录
     - name: Decode Keystore
-      working-directory: ./
+      working-directory: ./app
       run: |
         echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks ; 
         sleep 1 ; find ./  -name "keystore.jks" |xargs ls -lh  
